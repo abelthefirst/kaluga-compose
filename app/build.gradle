@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    buildToolsVersion "29.0.3"
+    compileSdkVersion 29
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerVersion '1.4.0'
+        kotlinCompilerExtensionVersion '1.0.0-alpha04'
+    }
+
+    defaultConfig {
+        applicationId "com.splendo.composeplayground"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/kotlinx-serialization-runtime.kotlin_module'
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/kotlin'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.ui:ui-tooling:$compose_version"
+    implementation "com.google.android.material:compose-theme-adapter:$compose_version"
+    implementation 'com.google.android.material:material:1.2.1'
+
+    implementation "org.koin:koin-androidx-viewmodel:2.1.6"
+
+    implementation("com.splendo.kaluga:alerts:0.0.5")
+    implementation("com.splendo.kaluga:base:0.0.5")
+    implementation("com.splendo.kaluga:architecture:0.0.5")
+}
