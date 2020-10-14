@@ -1,6 +1,5 @@
 package com.splendo.composeplayground.list
 
-import android.util.Log
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,7 +23,6 @@ import com.splendo.composeplayground.data.DataItem
 
 @Composable
 fun layout(colors: Colors, viewModel: ListViewModel) {
-    Log.d("Debug", "fun layout(colors: Colors, viewModel: ListViewModel)")
     val loading = viewModel.loading.observeAsState()
     layout(
         colors,
@@ -72,7 +70,6 @@ private fun dataItem(dataItem: DataItem, dataItemClickHandler: (Int) -> Unit) {
 
 @Composable
 private fun loadedState(itemList: List<DataItem>, itemClickHandler: (Int) -> Unit) {
-    Log.d("Debug", "private fun loadedState(itemList: List<DataItem>, itemClickHandler: (Int) -> Unit)")
     LazyColumnFor(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp), items = itemList) {
         dataItem(it, itemClickHandler)
     }
@@ -84,23 +81,17 @@ private fun layout(
     itemList: State<List<DataItem>?>,
     itemClickHandler: (Int) -> Unit,
     loading: Boolean) {
-    Log.d("Debug", "private fun layout(\n" +
-            "    colors: Colors,\n" +
-            "    itemList: State<List<DataItem>?>,\n" +
-            "    itemClickHandler: (Int) -> Unit,\n" +
-            "    loading: State<Boolean?>)")
-    if (loading) {
-        Log.d("Debug", "ololo 1")
-        loadingState()
-    } else {
-        Log.d("Debug", "ololo 2")
-        loadedState(itemList.value!!, itemClickHandler)
+    MaterialTheme(colors) {
+        if (loading) {
+            loadingState()
+        } else {
+            loadedState(itemList.value!!, itemClickHandler)
+        }
     }
 }
 
 @Composable
 private fun loadingState() {
-    Log.d("Debug", "private fun loadingState()")
     Box(Modifier.fillMaxSize(), Alignment.Center) {
         CircularProgressIndicator()
     }

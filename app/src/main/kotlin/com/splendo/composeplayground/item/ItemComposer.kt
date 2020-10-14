@@ -18,19 +18,12 @@ class ItemComposer : Composer<ItemViewModel> {
 
     @Composable
     override fun composeUi(colors: Colors) {
-        val showAlert = remember { mutableStateOf(false) }
         layout(
             colors,
-            //viewModel::showAlert,
-            {
-                showAlert.value = true
-            },
+            viewModel::showAlert,
             viewModel.buttonTitle,
             viewModel.name.observeAsState()
         )
-        if (showAlert.value) {
-            showAlert(showAlert)
-        }
     }
 
     @Composable
@@ -61,7 +54,7 @@ class ItemComposer : Composer<ItemViewModel> {
         MaterialTheme(colors) {
             Box(modifier = Modifier.fillMaxSize(), Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = itemName.value!!, style = MaterialTheme.typography.h4)
+                    Text(itemName.value!!, style = MaterialTheme.typography.h4)
                     Spacer(Modifier.preferredHeight(16.dp))
                     Button(buttonClickHandler) {
                         Text(buttonTitle)
@@ -73,7 +66,6 @@ class ItemComposer : Composer<ItemViewModel> {
     }
 
     @Composable
-    @Preview
     fun showAlert(showAlert: MutableState<Boolean>) {
         AlertDialog(
             onDismissRequest = { showAlert.value = false },
